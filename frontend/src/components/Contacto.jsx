@@ -3,7 +3,7 @@ import React from 'react';
 function Contacto() {
   return (
     <>
-      <div className="isolate bg-white px-6 py-16 lg:px-8 relative">
+      <div className="isolate bg-white px-6 py-16 lg:px-8 relative" id='contacto'>
         {/* Fondo decorativo */}
         <div
           className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"

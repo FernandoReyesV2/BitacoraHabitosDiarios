@@ -32,7 +32,7 @@ const Galeria = () => {
   };
 
   return (
-    <div className="relative w-full h-96 overflow-hidden">
+    <div className="relative w-full h-96 overflow-hidden" id='inicio'>
       {/* Texto "Bienvenido" superpuesto */}
       <div className="absolute inset-0 flex items-center justify-center z-10">
         <h1 className="text-5xl md:text-6xl font-bold text-white px-8 py-4 rounded-lg">
