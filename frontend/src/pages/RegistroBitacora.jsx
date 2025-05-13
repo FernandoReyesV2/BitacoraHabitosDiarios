@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/navbar';
+import Habitos from '../components/Habitos';
 
 function Registro() {
   const [form, setForm] = useState({
     titulo: '',
-    email: '',
     descripcion: '',
     fecha: '',
     categoria: ''
@@ -15,8 +15,8 @@ function Registro() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const categorias = ['Salud', 'Trabajo', 'Estudio', 'Ejercicio', 'Personal']; // Editable
+  const userId = localStorage.getItem('userId'); // Obtener el userId del almacenamiento local (puedes usar el método que corresponda)
 
-  // Fecha por defecto al montar el componente
   useEffect(() => {
     const hoy = new Date().toISOString().split('T')[0];
     setForm(f => ({ ...f, fecha: hoy }));
@@ -24,16 +24,10 @@ function Registro() {
 
   const validar = (nombre, valor) => {
     let error = '';
-
     switch (nombre) {
       case 'titulo':
         if (!/^[A-ZÁÉÍÓÚÑa-záéíóúñ\s]{3,40}$/.test(valor.trim())) {
           error = 'El título debe tener entre 3 y 40 letras, sin números.';
-        }
-        break;
-      case 'email':
-        if (!/^\S+@\S+\.\S+$/.test(valor.trim())) {
-          error = 'Email no válido.';
         }
         break;
       case 'descripcion':
@@ -50,7 +44,6 @@ function Registro() {
       default:
         break;
     }
-
     setErrores(prev => ({ ...prev, [nombre]: error }));
   };
 
@@ -63,10 +56,8 @@ function Registro() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validar todo antes de enviar
     Object.keys(form).forEach((key) => validar(key, form[key]));
 
-    // Verificar si hay errores activos
     const tieneErrores = Object.values(errores).some(e => e);
     const camposVacios = Object.values(form).some(v => v.trim() === '');
     if (tieneErrores || camposVacios) {
@@ -74,33 +65,32 @@ function Registro() {
     }
 
     try {
-    const formParaEnviar = {
-      ...form,
-      titulo: form.titulo.toUpperCase().trim()
-    };
+      const formParaEnviar = {
+        ...form,
+        titulo: form.titulo.toUpperCase().trim(),
+        userId: userId // Agregar el userId al registro
+      };
 
-    await axios.post('http://localhost:3001/registros', formParaEnviar);
-    setModalVisible(true);
-    setForm({
-      titulo: '',
-      email: '',
-      descripcion: '',
-      fecha: new Date().toISOString().split('T')[0],
-      categoria: ''
-    });
-  } catch (error) {
-    alert('Error al guardar el registro');
-  }
-};
+      await axios.post('http://localhost:3001/registros', formParaEnviar);
+      setModalVisible(true);
+      setForm({
+        titulo: '',
+        descripcion: '',
+        fecha: new Date().toISOString().split('T')[0],
+        categoria: ''
+      });
+    } catch (error) {
+      alert('Error al guardar el registro');
+    }
+  };
 
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Registrar hábito</h2>
+          <h2 className="text-3xl font-semibold text-gray-900 mb-6 text-center">Registrar hábito</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-
             {/* Título */}
             <div>
               <label htmlFor="titulo" className="block text-sm font-medium text-gray-700">Título</label>
@@ -115,21 +105,6 @@ function Registro() {
               {errores.titulo && <p className="text-red-500 text-sm">{errores.titulo}</p>}
             </div>
 
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={handleChange}
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-                placeholder="tu@correo.com"
-              />
-              {errores.email && <p className="text-red-500 text-sm">{errores.email}</p>}
-            </div>
-
             {/* Descripción */}
             <div>
               <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">Descripción</label>
@@ -138,6 +113,7 @@ function Registro() {
                 name="descripcion"
                 value={form.descripcion}
                 onChange={handleChange}
+                style={{ resize: 'none' }}
                 rows="4"
                 className="mt-1 block w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
                 placeholder="Describe el hábito"
@@ -204,6 +180,7 @@ function Registro() {
           </div>
         </div>
       )}
+      <Habitos />
     </>
   );
 }

@@ -1,16 +1,9 @@
 [
   {
-    "titulo": "Nuevo titulo",
-    "email": "fernandojrv73@hotmail.com",
-    "descripcion": "que tiene este habito",
+    "titulo": "NUEVO TITULO",
+    "descripcion": "asdasdads",
     "fecha": "2025-05-13",
-    "categoria": "Salud"
-  },
-  {
-    "titulo": "ASDSAS SASDASD",
-    "email": "fernandojrv73@hotmail.coms",
-    "descripcion": "asdasd",
-    "fecha": "2025-05-13",
-    "categoria": "Salud"
+    "categoria": "Trabajo",
+    "userId": null
   }
 ]
