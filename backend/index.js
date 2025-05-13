@@ -101,6 +101,39 @@ app.post('/registros', (req, res) => {
   res.status(201).json({ message: 'Registro guardado' });
 });
 
+// RUTA: Formulario de contacto
+app.post('/contacto', (req, res) => {
+  const { nombre, apellido, email, mensaje } = req.body;
+
+  if (!nombre || !apellido || !email || !mensaje) {
+    return res.status(400).json({ message: 'Faltan campos en el formulario' });
+  }
+
+  // Leer registros actuales o crear arreglo nuevo
+  const contactoFile = './mensajesContacto.json';
+  let mensajes = [];
+
+  if (fs.existsSync(contactoFile)) {
+    const data = fs.readFileSync(contactoFile);
+    mensajes = JSON.parse(data);
+  }
+
+  // Agregar nuevo mensaje
+  mensajes.push({
+    nombre,
+    apellido,
+    email,
+    mensaje,
+    fecha: new Date().toISOString()
+  });
+
+  // Guardar en archivo
+  fs.writeFileSync(contactoFile, JSON.stringify(mensajes, null, 2));
+
+  res.status(201).json({ message: 'Mensaje recibido' });
+});
+
+
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
