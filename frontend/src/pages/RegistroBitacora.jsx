@@ -17,6 +17,8 @@ function Registro() {
   const categorias = ['Salud', 'Trabajo', 'Estudio', 'Ejercicio', 'Personal']; // Editable
   const userId = localStorage.getItem('userId'); // Obtener el userId del almacenamiento local (puedes usar el método que corresponda)
 
+  const token = localStorage.getItem('token'); // O donde sea que hayas guardado el token
+
   useEffect(() => {
     const hoy = new Date().toISOString().split('T')[0];
     setForm(f => ({ ...f, fecha: hoy }));
@@ -71,7 +73,16 @@ function Registro() {
         userId: userId // Agregar el userId al registro
       };
 
-      await axios.post('http://localhost:3001/registros', formParaEnviar);
+      // Obtener el token de localStorage
+      const token = localStorage.getItem('token');
+
+      // Enviar la solicitud POST con el token en las cabeceras
+      await axios.post('http://localhost:3001/registros', formParaEnviar, {
+        headers: {
+          'Authorization': `Bearer ${token}`  // Agregar el token en las cabeceras
+        }
+      });
+
       setModalVisible(true);
       setForm({
         titulo: '',
@@ -83,6 +94,7 @@ function Registro() {
       alert('Error al guardar el registro');
     }
   };
+
 
   return (
     <>
