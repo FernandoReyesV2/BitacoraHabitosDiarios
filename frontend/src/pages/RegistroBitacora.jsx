@@ -14,10 +14,10 @@ function Registro() {
   const [errores, setErrores] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
 
-  const categorias = ['Salud', 'Trabajo', 'Estudio', 'Ejercicio', 'Personal']; // Editable
-  const userId = localStorage.getItem('userId'); // Obtener el userId del almacenamiento local (puedes usar el método que corresponda)
+  const categorias = ['Salud', 'Trabajo', 'Estudio', 'Ejercicio', 'Personal'];
+  const userId = localStorage.getItem('userId');
 
-  const token = localStorage.getItem('token'); // O donde sea que hayas guardado el token
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const hoy = new Date().toISOString().split('T')[0];
@@ -70,16 +70,15 @@ function Registro() {
       const formParaEnviar = {
         ...form,
         titulo: form.titulo.toUpperCase().trim(),
-        userId: userId // Agregar el userId al registro
+        userId: userId
       };
 
-      // Obtener el token de localStorage
       const token = localStorage.getItem('token');
 
-      // Enviar la solicitud POST con el token en las cabeceras
+ 
       await axios.post('http://localhost:3001/registros', formParaEnviar, {
         headers: {
-          'Authorization': `Bearer ${token}`  // Agregar el token en las cabeceras
+          'Authorization': `Bearer ${token}`
         }
       });
 
@@ -103,7 +102,7 @@ function Registro() {
         <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-3xl font-semibold text-gray-900 mb-6 text-center">Registrar hábito</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Título */}
+
             <div>
               <label htmlFor="titulo" className="block text-sm font-medium text-gray-700">Título</label>
               <input
@@ -117,7 +116,6 @@ function Registro() {
               {errores.titulo && <p className="text-red-500 text-sm">{errores.titulo}</p>}
             </div>
 
-            {/* Descripción */}
             <div>
               <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">Descripción</label>
               <textarea
@@ -133,7 +131,6 @@ function Registro() {
               {errores.descripcion && <p className="text-red-500 text-sm">{errores.descripcion}</p>}
             </div>
 
-            {/* Fecha */}
             <div>
               <label htmlFor="fecha" className="block text-sm font-medium text-gray-700">Fecha</label>
               <input
@@ -147,7 +144,6 @@ function Registro() {
               {errores.fecha && <p className="text-red-500 text-sm">{errores.fecha}</p>}
             </div>
 
-            {/* Categoría */}
             <div>
               <label htmlFor="categoria" className="block text-sm font-medium text-gray-700">Categoría</label>
               <select
@@ -164,7 +160,6 @@ function Registro() {
               </select>
             </div>
 
-            {/* Botón */}
             <div className="mt-6 flex justify-end">
               <button
                 type="submit"
@@ -177,7 +172,6 @@ function Registro() {
         </div>
       </div>
 
-      {/* Modal */}
       {modalVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-md shadow-md max-w-sm w-full">

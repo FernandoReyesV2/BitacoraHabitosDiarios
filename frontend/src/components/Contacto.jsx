@@ -20,7 +20,6 @@ function Contacto() {
   const validateField = (name, value) => {
     let errorMessage = '';
     if (name === 'nombre' || name === 'apellido') {
-      // Validar que no haya espacios en blanco
       if (/\s/.test(value)) {
         errorMessage = `${name.charAt(0).toUpperCase() + name.slice(1)} no puede contener espacios.`;
       } else if (!/^[A-Za-záéíóúÁÉÍÓÚ]+$/.test(value)) {
@@ -29,12 +28,10 @@ function Contacto() {
         errorMessage = `${name.charAt(0).toUpperCase() + name.slice(1)} debe tener entre 3 y 20 caracteres.`;
   }
     } else if (name === 'mensaje') {
-      // Validar el mensaje (que sea entre 4 y 200 caracteres)
       if (!/^[A-Za-záéíóúÁÉÍÓÚ0-9 ]{4,200}$/.test(value)) {
         errorMessage = 'El mensaje debe contener entre 4 y 200 caracteres alfanuméricos.';
       }
     } else if (name === 'email') {
-      // Validar correo electrónico
       if (!/\S+@\S+\.\S+/.test(value)) {
         errorMessage = 'Correo electrónico no válido.';
       }
@@ -51,7 +48,6 @@ function Contacto() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Convertir a mayúsculas los campos de nombre, apellido y mensaje
     if (name === 'nombre' || name === 'apellido') {
       setFormData({ ...formData, [name]: value.replace(/\s/g, '').toUpperCase() });
     } else if (name === 'mensaje') {
@@ -60,14 +56,12 @@ function Contacto() {
       setFormData({ ...formData, [name]: value });
     }
 
-    // Validación en tiempo real
     validateField(name, value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Verificamos que todos los campos sean válidos antes de enviar el formulario
     const nombreError = validateField('nombre', formData.nombre);
     const apellidoError = validateField('apellido', formData.apellido);
     const mensajeError = validateField('mensaje', formData.mensaje);
@@ -88,7 +82,6 @@ function Contacto() {
       });
 
       if (response.ok) {
-        // alert('Mensaje enviado correctamente');
         setFormData({ nombre: '', apellido: '', email: '', mensaje: '' });
         setModalVisible(true);
       } else {
@@ -206,7 +199,7 @@ function Contacto() {
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 
                                shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
                                focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    style={{ resize: 'none' }} // Evitar redimensionar el textarea
+                    style={{ resize: 'none' }}
                   ></textarea>
                   {errors.mensaje && <p className="text-red-600 text-xs">{errors.mensaje}</p>}
                 </div>

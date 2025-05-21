@@ -38,7 +38,6 @@ function Habitos() {
     return `${fecha.getDate().toString().padStart(2, '0')}/${(fecha.getMonth() + 1).toString().padStart(2, '0')}/${fecha.getFullYear()}`;
   };
 
-  // Filtrado
   const registrosFiltrados = registros.filter((registro) => {
     const coincideTitulo = registro.titulo.toLowerCase().includes(busqueda.toLowerCase());
     const coincideCategoria = categoriaSeleccionada === '' || registro.categoria?.toLowerCase() === categoriaSeleccionada;
@@ -49,7 +48,6 @@ function Habitos() {
     <div className='bg-gray-50 flex justify-center items-center'>
       <div className="p-8 bg-white pb-20 max-w-screen-2xl shadow-lg rounded-lg w-full">
 
-        {/* Barra de búsqueda y filtro */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <input
             type="text"
@@ -71,7 +69,6 @@ function Habitos() {
           </select>
         </div>
 
-        {/* Tarjetas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 justify-center max-w-screen-xl mx-auto">
           {registrosFiltrados.map((registro, index) => (
             <div

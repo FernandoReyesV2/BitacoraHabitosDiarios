@@ -11,7 +11,6 @@ function Inicio() {
     if (sectionId) {
       const element = document.getElementById(sectionId);
       if (element) {
-        // Da un pequeño delay para asegurar que el componente se haya montado
         setTimeout(() => {
           element.scrollIntoView({ behavior: 'smooth' });
         }, 100);

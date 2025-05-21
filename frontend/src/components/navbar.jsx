@@ -22,7 +22,6 @@ function Navbar() {
 
   const handleNavigateWithScroll = (sectionId) => {
     if (location.pathname !== '/') {
-      // Guardar destino en localStorage y redirigir al home
       localStorage.setItem('scrollToSection', sectionId);
       navigate('/');
     } else {

@@ -1,9 +1,5 @@
 [
   {
-    "username": "Fernanado",
-    "password": "$2b$10$D762ra01U9aecprG9UO5z.TW1nUc9cPYTi3QKeO7WV7HpAPkKo.Qe"
-  },
-  {
     "username": "Fernando",
     "password": "$2b$10$u4ygsG7XWcjWegqWWoAQKeBIrO2LqzU1PnM9hPy5EBzvKjIbjD9Ce"
   },
@@ -13,8 +9,8 @@
     "password": "$2b$10$n322TxSuS4dvuN/8/X9JOOAcsd1ix7.UJo6a966afR5nuyIBlRMGi"
   },
   {
-    "userId": "3c0c0dd7-3fcc-4a27-961b-ddb4d0ae95c5",
-    "username": "mibo",
-    "password": "$2b$10$utQph7OhticY8xOehzwYoOt0E8D1GNRiAtMfN1Unhiy5pI7Eei9wm"
+    "userId": "15b247e3-f167-4a4c-813b-81d854a7072e",
+    "username": "Alberto",
+    "password": "$2b$10$JZkYXaY0rWLQhgUevDnXeuWi22b0oB41TrbSDRMeM3B2oiWRdOTiG"
   }
 ]

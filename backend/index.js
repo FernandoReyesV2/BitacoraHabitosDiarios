@@ -10,22 +10,21 @@ app.use(cors());
 app.use(express.json());
 
 const filePath = './registros.json';
-const usersFilePath = './users.json'; // Aquí almacenaremos los usuarios registrados
+const usersFilePath = './users.json';
 
-const secretKey = 'tu-secreto'; // Cambia esto por una clave segura en producción
+const secretKey = 'tu-secreto';
 const { v4: uuidv4 } = require('uuid');
 
-// RUTA: Registro de usuario
+
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
     return res.status(400).json({ message: 'Faltan datos' });
   }
 
-  // Encriptar la contraseña
+
   const hashedPassword = bcrypt.hashSync(password, 10);
 
-  // Verificar si el usuario ya existe
   let users = [];
   try {
     if (fs.existsSync(usersFilePath)) {
@@ -40,29 +39,25 @@ app.post('/register', (req, res) => {
     return res.status(400).json({ message: 'El usuario ya existe' });
   }
 
-  // Crear un nuevo usuario con un userId único
   const newUser = {
-    userId: uuidv4(), // Generamos un UUID único
+    userId: uuidv4(),
     username,
     password: hashedPassword,
   };
 
-  // Guardar el nuevo usuario
   try {
     users.push(newUser);
     fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
 
-    // Responder con el mensaje y el userId
     res.status(201).json({
       message: 'Usuario registrado con éxito',
-      userId: newUser.userId, // Retornar el userId generado
+      userId: newUser.userId,
     });
   } catch (err) {
     return res.status(500).json({ message: 'Error al guardar el usuario', error: err });
   }
 });
 
-// RUTA: Login de usuario
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -70,7 +65,6 @@ app.post('/login', (req, res) => {
     return res.status(400).json({ message: 'Faltan datos' });
   }
 
-  // Verificar usuario
   let users = [];
   try {
     if (fs.existsSync(usersFilePath)) {
@@ -86,12 +80,10 @@ app.post('/login', (req, res) => {
     return res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
   }
 
-  // Generar token JWT
   const token = jwt.sign({ userId: user.userId, username }, secretKey, { expiresIn: '1h' });
   res.json({ message: 'Login exitoso', token });
 });
 
-// RUTA: Lista de hábitos (restringida a usuarios logueados)
 app.get('/registros', (req, res) => {
   const authHeader = req.headers['authorization'];
 
@@ -103,13 +95,11 @@ app.get('/registros', (req, res) => {
 
   try {
     const decoded = jwt.verify(token, secretKey);
-    const { userId } = decoded;  // Extraemos el userId del token decodificado
+    const { userId } = decoded; 
 
-    // Leer los registros
     const data = fs.existsSync(filePath) ? fs.readFileSync(filePath) : '[]';
     const registros = JSON.parse(data);
 
-    // Filtrar los registros para que solo se muestren los del usuario autenticado
     const registrosFiltrados = registros.filter(registro => registro.userId === userId);
 
     res.json(registrosFiltrados);
@@ -119,7 +109,6 @@ app.get('/registros', (req, res) => {
 });
 
 
-// POST - Nuevo hábito
 app.post('/registros', (req, res) => {
   const authHeader = req.headers['authorization'];
 
@@ -159,7 +148,6 @@ app.post('/registros', (req, res) => {
 });
 
 
-// RUTA: Formulario de contacto
 app.post('/contacto', (req, res) => {
   const { nombre, apellido, email, mensaje } = req.body;
 
@@ -167,7 +155,6 @@ app.post('/contacto', (req, res) => {
     return res.status(400).json({ message: 'Faltan campos en el formulario' });
   }
 
-  // Leer registros actuales o crear arreglo nuevo
   const contactoFile = './mensajesContacto.json';
   let mensajes = [];
 
@@ -176,7 +163,6 @@ app.post('/contacto', (req, res) => {
     mensajes = JSON.parse(data);
   }
 
-  // Agregar nuevo mensaje
   mensajes.push({
     nombre,
     apellido,
@@ -185,7 +171,6 @@ app.post('/contacto', (req, res) => {
     fecha: new Date().toISOString()
   });
 
-  // Guardar en archivo
   fs.writeFileSync(contactoFile, JSON.stringify(mensajes, null, 2));
 
   res.status(201).json({ message: 'Mensaje recibido' });

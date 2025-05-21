@@ -1,22 +1,8 @@
 [
   {
-    "titulo": "A VER PROBEMOS DOSS",
-    "descripcion": "213123123",
-    "fecha": "2025-05-13",
-    "categoria": "Trabajo",
-    "userId": "b27412c4-f715-4920-a228-0719d0081f31"
-  },
-  {
-    "titulo": "MIBO",
-    "descripcion": "mibo",
-    "fecha": "2025-05-13",
-    "categoria": "Estudio",
-    "userId": "3c0c0dd7-3fcc-4a27-961b-ddb4d0ae95c5"
-  },
-  {
-    "titulo": "JOSUE",
-    "descripcion": "josue",
-    "fecha": "2025-05-13",
+    "titulo": "LECTURA DIARIA",
+    "descripcion": "Libro El señor de los anillos, página 120",
+    "fecha": "2025-05-21",
     "categoria": "Personal",
     "userId": "b27412c4-f715-4920-a228-0719d0081f31"
   }

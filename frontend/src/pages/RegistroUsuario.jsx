@@ -7,7 +7,7 @@ import Navbar from '../components/navbar';
 function RegistroUsuario() {
   const [form, setForm] = useState({ username: '', password: '' });
   const [mensaje, setMensaje] = useState('');
-  const navigate = useNavigate(); // 👈 para redirigir
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,7 +25,7 @@ function RegistroUsuario() {
     try {
       await axios.post('http://localhost:3001/register', form);
       setMensaje('Usuario registrado con éxito');
-      setTimeout(() => navigate('/login'), 1500); // 👈 redirige tras 1.5s
+      setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
       setMensaje(err.response?.data?.message || 'Error al registrar');
     }

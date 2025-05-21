@@ -14,7 +14,6 @@ const people = [
 export default function Desarrolladores() {
   return (
     <div className="bg-white">
-      {/* Sección de introducción con imagen y texto */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8 mb-4">
         <div className="grid grid-cols-2 items-center mb-16">
           <div className="pl-6 text-center sm:text-left pr-6">
@@ -30,7 +29,6 @@ export default function Desarrolladores() {
           </div>
         </div>
 
-        {/* Cards de los desarrolladores */}
         <ul role="list" className="grid gap-8 sm:grid-cols-2">
           {people.map((person) => (
             <li
